@@ -58,62 +58,15 @@ app.post('/apiwebhook', function(req, res){
                   res.send(response);
                 });
             }
+            break;
+        case 'find_conference':
+            console.log("action.find_conference");
+            var year;
 
-            var year;
-            if(request.result.parameters.year){
-              year = parseInt(request.result.parameters.year);
-            } else {
-              if(request.result.parameters.year_period){
-                year = parseInt(request.result.parameters.year_period.substring(0, 4));//+0 to transform as int
-              } else {
-                year = 2017;
-              }
-            }
-            winners.getWinners(year, function (mentorsList){
-              res.send(apiHelper.createWinnersMessage(year, mentorsList));
+            conferencesDao.getConferencesByTheme(request.result.parameters.search, function (response){
+              res.send(response);
             });
-            break;
-        case 'jury_search':
-            console.log("action.jury_search");
-            var year;
-            if(request.result.parameters.year){
-              year = parseInt(request.result.parameters.year);
-            } else {
-              if(request.result.parameters.year_period){
-                year = parseInt(request.result.parameters.year_period.substring(0, 4));//+0 to transform as int
-              } else {
-                year = 2017;
-              }
-            }
-            jury.getJury(year, function (mentorsList){
-              res.send(apiHelper.createJurysMessage(year, mentorsList));
-            });
-            break;
-        case 'mentor_search':
-            console.log("action.mentors_type");
-            mentors.getMentors(request.result.parameters.mentors_type, function (mentorsList){
-              res.send(apiHelper.createMentorsMessage(request.result.parameters.mentors_type, mentorsList));
-            });
-            break;
-        case 'orgas_search':
-                console.log("action.mentors_type");
-                orgas.getOrgas(function (oargas){
-                  res.send(apiHelper.createOrgasMessage(oargas));
-                });
-                break;
-        case 'sponsors_search':
-            console.log("action.mentors_type");
-            sponsors.getSponsors(function (sponsorsList){
-              res.send(apiHelper.createSponsorsMessage(sponsorsList));
-            });
-            break;
-        case 'action.time':
-            console.log("action.time");
-            getTime(function(result){
-              console.log("action.time - result: "+ JSON.stringify(result));
-              res.send(result);
-            });
-            break;
+            break;        
         default:
           console.log("action default");
           searchApi.search(request.result.resolvedQuery, function(result){

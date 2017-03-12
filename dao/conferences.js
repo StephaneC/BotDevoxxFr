@@ -91,8 +91,9 @@ var getConferencesByTheme = function(search, callback){
       }
     }
   }
-  callback(found);
-  return found;
+  var msg = apiHelper.findConfResponse(found);
+  callback(msg);
+  return msg;
 };
 
 
