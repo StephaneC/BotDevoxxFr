@@ -38,6 +38,7 @@ app.get('/test', function(req, res){
 
 // Endpoint for api.ai
 app.post('/apiwebhook', function(req, res){
+  res.set('Content-type', 'application/json');
   //check authentication
   if(req.headers.token != myApiKey){
     console.log("token inccorect : " + req.headers.token);
@@ -47,7 +48,7 @@ app.post('/apiwebhook', function(req, res){
     console.log("apiwebhook "+ JSON.stringify(req.body));
     var request = req.body;
     var sender = '';
-    if(request.originalRequest.source == 'facebook'){
+    if(request.originalRequest && request.originalRequest.source == 'facebook'){
       sender = request.originalRequest.data.sender.id;
       console.log("fb sender " + sender);
     }
