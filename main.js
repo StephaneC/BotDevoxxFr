@@ -46,6 +46,11 @@ app.post('/apiwebhook', function(req, res){
   } else {
     console.log("apiwebhook "+ JSON.stringify(req.body));
     var request = req.body;
+    var sender = '';
+    if(request.originalRequest.source == 'facebook'){
+      sender = request.originalRequest.data.sender.id;
+      console.log("fb sender " + sender);
+    }
     if(request.result){
       console.log(request);
       switch (request.result.action) {
@@ -54,7 +59,7 @@ app.post('/apiwebhook', function(req, res){
             if(request.result.parameters['given-name'] || request.result.parameters['first-name'] ||
               request.result.parameters['last-name']){
                 speakersDao.findSpeaker(request.result.parameters['given-name'] ,
-                  request.result.parameters['last-name'], function (response){
+                  request.result.parameters['last-name'], sender, function (response){
                   res.send(response);
                 });
             }
@@ -63,7 +68,7 @@ app.post('/apiwebhook', function(req, res){
             console.log("action.find_conference");
             var year;
 
-            conferencesDao.getConferencesByTheme(request.result.parameters.search, function (response){
+            conferencesDao.getConferencesByTheme(request.result.parameters.search, sender, function (response){
               res.send(response);
             });
             break;

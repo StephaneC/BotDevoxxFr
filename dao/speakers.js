@@ -50,7 +50,7 @@ var getAllSpeakers = function(callback){
     });
 };
 
-var findSpeaker = function(firstName, lastName, callback){
+var findSpeaker = function(firstName, lastName, sender, callback){
   getAllSpeakers(function(speakers){
     var found = [];
     for(var i=0; i<speakers.length; i++){
@@ -62,7 +62,7 @@ var findSpeaker = function(firstName, lastName, callback){
         found.push(speakers[i]);
       }
     }
-    var msg = apiHelper.findSpeakerResponse(found);
+    var msg = apiHelper.findSpeakerResponse(sender, found);
     callback(msg);
     return msg;
   });

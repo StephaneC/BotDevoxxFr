@@ -3,7 +3,7 @@
  */
 var defaultSource = 'Stéphane Castrec';
 
-var findSpeakerResponse = function(found){
+var findSpeakerResponse = function(sender, found){
   var msg;
   var facebook;
   if(!found || found.length ==0){
@@ -23,13 +23,13 @@ var findSpeakerResponse = function(found){
         }
     }
     console.log("message : " + JSON.stringify(msg));
-    facebook = createCarouselMsg(found, 'SPEAKER');
+    facebook = createCarouselMsg(sender, found, 'SPEAKER');
 
   }
   return createResponse(msg, msg, facebook);
 };
 
-var findConfResponse = function(found){
+var findConfResponse = function(sender, found){
   var msg = "";
   var facebook;
   if(!found || found.length ==0){
@@ -38,7 +38,7 @@ var findConfResponse = function(found){
     for(var i=0; i<found.length; i++){
       msg += 'J\'ai trouvé '+ found[i].talk.title+'. \n';
     }
-    var facebook = createCarouselMsg(found, 'CONFERENCES');
+    var facebook = createCarouselMsg(sender, found, 'CONFERENCES');
 
   }
   return createResponse(msg, msg, facebook);
@@ -72,8 +72,12 @@ var getConfElementForCarousel = function(elt){
   return msg;
 }
 
-var createCarouselMsg = function(list, type){
-  var fbMsg = {};
+var createCarouselMsg = function(sender, list, type){
+  var fbMsg = {
+    recipient:{
+      id:sender
+    }
+  };
   fbMsg.message= {
     attachment : {
       type:'template',

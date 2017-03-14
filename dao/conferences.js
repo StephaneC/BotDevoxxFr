@@ -81,7 +81,7 @@ var loadInCache = function(){
   })
 };
 
-var getConferencesByTheme = function(search, callback){
+var getConferencesByTheme = function(search, sender, callback){
   var found = [];
   console.log("Looking for conference about "+ search + " in " + conferences.length + " conferences");
   for(var i=0; i<conferences.length; i++){
@@ -91,7 +91,7 @@ var getConferencesByTheme = function(search, callback){
       }
     }
   }
-  var msg = apiHelper.findConfResponse(found);
+  var msg = apiHelper.findConfResponse(sender, found);
   callback(msg);
   return msg;
 };
