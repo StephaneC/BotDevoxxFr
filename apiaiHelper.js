@@ -5,8 +5,9 @@ var defaultSource = 'Stéphane Castrec';
 
 var findSpeakerResponse = function(found){
   var msg;
+  var facebook;
   if(!found || found.length ==0){
-    msg = 'Je ne connais pas encore les winners de ' + year;
+    msg = 'Je ne connais pas encore ce speaker ';
   } else {
     if(found.length == 1){
       //found 1
@@ -21,21 +22,79 @@ var findSpeakerResponse = function(found){
           msg += 'J\'ai trouvé '+ found[0].firstName + ' ' + found[0].firstName+ ".";
         }
     }
+    console.log("message : " + JSON.stringify(msg));
+    facebook = createCarouselMsg(found, 'SPEAKER');
+
   }
-  return createResponse(msg, msg, found);
+  return createResponse(msg, msg, facebook);
 };
 
 var findConfResponse = function(found){
   var msg = "";
+  var facebook;
   if(!found || found.length ==0){
     msg = 'Je n\'ai pas trouvé de conférence sur ce sujet';
   } else {
     for(var i=0; i<found.length; i++){
       msg += 'J\'ai trouvé '+ found[i].talk.title+'. \n';
     }
+    var facebook = createCarouselMsg(found, 'CONFERENCES');
+
   }
-  return createResponse(msg, msg, found);
+  return createResponse(msg, msg, facebook);
 };
+
+var getSpeakerElementForCarousel = function(elt){
+  var msg = {
+    title:elt.firstName+' ' + elt.lastName,
+    image_url:elt.avatarURL,
+    subtitle:elt.company,
+    buttons: []
+  }
+  //add button to talks
+  for(var i=0; i<elt.acceptedTalks; i++){
+    msg.buttons.push({
+      type:"web_url",
+      url:elt.acceptedTalks[i].links[0].href,
+      title:elt.acceptedTalks[i].title
+    })
+  }
+
+  return msg;
+}
+
+var getConfElementForCarousel = function(elt){
+  var msg = {
+    title:elt.title,
+    subtitle:elt.track
+  }
+
+  return msg;
+}
+
+var createCarouselMsg = function(list, type){
+  var fbMsg = {};
+  fbMsg.message= {
+    attachment : {
+      type:'template',
+      payload :{
+        template_type:'generic',
+        elements: []
+      }
+    }
+
+  };
+  for(var i=0; i<list.length; i++){
+    if(type == 'SPEAKER'){
+      fbMsg.message.attachment.payload.elements.push(getSpeakerElementForCarousel(list[i]));
+    } else {
+      fbMsg.message.attachment.payload.elements.push(getConfElementForCarousel(list[i]));
+    }
+  }
+  return fbMsg;
+}
+
+
 
 
 var createError = function(statusCode, message){
@@ -51,16 +110,13 @@ var createError = function(statusCode, message){
   return response;
 };
 var createResponse = function(speech, message, data, source){
-  if(!data){
-    data = {};
-  }
-  data.slack = {
-    text : message
-  };
+
   var response = {
     speech : speech,
     displayText: message,
-    data: data,
+    data: {
+      facebook: data
+    },
     source:source
   };
   if(!source){
