@@ -52,7 +52,7 @@ app.post('/apiwebhook', function(req, res){
         case 'find_speaker':
             console.log("action.find_speaker " + request.result.parameters['given-name'] );
             if(request.result.parameters['given-name'] || request.result.parameters['first-name'] ||
-              request.result.parameters.['last-name']){
+              request.result.parameters['last-name']){
                 speakersDao.findSpeaker(request.result.parameters['given-name'] ,
                   request.result.parameters.['last-name'], function (response){
                   res.send(response);
