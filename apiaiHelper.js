@@ -123,6 +123,7 @@ var createResponse = function(speech, message, data, source){
     response.source = defaultSource;
   }
 
+  console.log("Sending message" + JSON.stringify(response));
   return response;
 };
 module.exports = {
