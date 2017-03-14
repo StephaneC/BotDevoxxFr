@@ -50,8 +50,8 @@ app.post('/apiwebhook', function(req, res){
       console.log(request);
       switch (request.result.action) {
         case 'find_speaker':
-            console.log("action.find_speaker");
-            if(request.result.parameters.firstName ||
+            console.log("action.find_speaker " + request.result.parameters['given-name'] );
+            if(request.result.parameters['given-name'] || request.result.parameters.firstName ||
               request.result.parameters.lastName){
                 speakersDao.findSpeaker(request.result.parameters.firstName,
                   request.result.parameters.lastName, function (response){
@@ -66,7 +66,7 @@ app.post('/apiwebhook', function(req, res){
             conferencesDao.getConferencesByTheme(request.result.parameters.search, function (response){
               res.send(response);
             });
-            break;        
+            break;
         default:
           console.log("action default");
           searchApi.search(request.result.resolvedQuery, function(result){
