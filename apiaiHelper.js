@@ -83,6 +83,7 @@ var createCarouselMsg = function(sender, list, type){
         template_type:'generic',
         elements: []
       }
+    }
   };
 
   for(var i=0; i<list.length; i++){
