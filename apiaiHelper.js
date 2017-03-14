@@ -74,9 +74,6 @@ var getConfElementForCarousel = function(elt){
 
 var createCarouselMsg = function(sender, list, type){
   var fbMsg = {
-    recipient:{
-      id:sender
-    },
     attachment : {
       type:'template',
       payload :{
