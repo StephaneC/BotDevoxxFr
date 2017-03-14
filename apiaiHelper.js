@@ -76,23 +76,20 @@ var createCarouselMsg = function(sender, list, type){
   var fbMsg = {
     recipient:{
       id:sender
-    }
-  };
-  fbMsg.message= {
+    },
     attachment : {
       type:'template',
       payload :{
         template_type:'generic',
         elements: []
       }
-    }
-
   };
+
   for(var i=0; i<list.length; i++){
     if(type == 'SPEAKER'){
-      fbMsg.message.attachment.payload.elements.push(getSpeakerElementForCarousel(list[i]));
+      fbMsg.attachment.payload.elements.push(getSpeakerElementForCarousel(list[i]));
     } else {
-      fbMsg.message.attachment.payload.elements.push(getConfElementForCarousel(list[i]));
+      fbMsg.attachment.payload.elements.push(getConfElementForCarousel(list[i]));
     }
   }
   return fbMsg;
