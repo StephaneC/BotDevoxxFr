@@ -67,7 +67,7 @@ var getSpeakerElementForCarousel = function(elt){
         payload:"SPEAKER_DETAIL_"+elt.uuid,
         title:"détail"
       });
-    }
+    
   }
 
   return msg;
