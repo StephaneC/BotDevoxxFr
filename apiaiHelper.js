@@ -76,7 +76,18 @@ var getSpeakerElementForCarousel = function(elt){
 var getConfElementForCarousel = function(elt){
   var msg = {
     title:elt.talk.title,
-    subtitle:elt.talk.track
+    subtitle:elt.day + ' à ' + elt.fromTime + '-' + elt.toTime+ ', salle' + elt.roomName
+  }
+
+  if(elt.talk && elt.talk.speakers){
+    msg.buttons=[];
+    for(var i=0; i<elt.talk.speakers.length; i++){
+      msg.buttons.push({
+        type:"postback",
+        payload:elt.talk.speakers[i].name,
+        title:elt.talk.speakers[i].name
+      });
+    }
   }
 
   return msg;
