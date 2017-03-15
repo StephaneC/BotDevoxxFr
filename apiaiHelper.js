@@ -50,8 +50,8 @@ var getSpeakerElementForCarousel = function(elt){
     image_url:elt.avatarURL,
     subtitle:elt.company,
   }
+  msg.buttons = [];
   if(elt.acceptedTalks){
-    msg.buttons = [];
     //add button to talks
     for(var i=0; i<elt.acceptedTalks; i++){
       msg.buttons.push({
@@ -67,7 +67,7 @@ var getSpeakerElementForCarousel = function(elt){
         payload:"SPEAKER_DETAIL_"+elt.uuid,
         title:"détail"
       });
-    
+
   }
 
   return msg;
