@@ -13,13 +13,13 @@ var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 app.use(bodyParser.json());
 
 app.get('/speakers', function(req, res){
-  speakersDao.findSpeaker("Mathieu", "ANCELIN", function (speakers){
+  speakersDao.findSpeaker("Mathieu", "ANCELIN", "", function (speakers){
     res.send(speakers);
   });
 });
 
 app.get('/conferences', function(req, res){
-  conferencesDao.getConferencesByTheme("java", function (conferences){
+  conferencesDao.getConferencesByTheme("java", "", function (conferences){
     res.send(conferences);
   });
 });

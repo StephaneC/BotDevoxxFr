@@ -49,15 +49,17 @@ var getSpeakerElementForCarousel = function(elt){
     title:elt.firstName+' ' + elt.lastName,
     image_url:elt.avatarURL,
     subtitle:elt.company,
-    buttons: []
   }
-  //add button to talks
-  for(var i=0; i<elt.acceptedTalks; i++){
-    msg.buttons.push({
-      type:"web_url",
-      url:elt.acceptedTalks[i].links[0].href,
-      title:elt.acceptedTalks[i].title
-    })
+  if(elt.acceptedTalks){
+    msg.buttons = [];
+    //add button to talks
+    for(var i=0; i<elt.acceptedTalks; i++){
+      msg.buttons.push({
+        type:"web_url",
+        url:elt.acceptedTalks[i].links[0].href,
+        title:elt.acceptedTalks[i].title
+      })
+    }
   }
 
   return msg;
