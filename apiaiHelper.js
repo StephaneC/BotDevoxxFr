@@ -64,8 +64,8 @@ var getSpeakerElementForCarousel = function(elt){
       //let's go to details
       msg.buttons.push({
         type:"postback",
-        payload:"SPEAKER_DETAIL_"+elt.uuid,
-        title:"détail"
+        payload:"Donne moi le détail du speaker "+elt.uuid,
+        title:"Détail"
       });
 
   }
@@ -75,8 +75,8 @@ var getSpeakerElementForCarousel = function(elt){
 
 var getConfElementForCarousel = function(elt){
   var msg = {
-    title:elt.title,
-    subtitle:elt.track
+    title:elt.talk.title,
+    subtitle:elt.talk.track
   }
 
   return msg;
