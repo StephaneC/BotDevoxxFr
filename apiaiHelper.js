@@ -59,7 +59,8 @@ var getSpeakerElementForCarousel = function(elt){
         url:elt.acceptedTalks[i].links[0].href,
         title:elt.acceptedTalks[i].title
       });
-    } else {
+    }
+  } else {
       //let's go to details
       msg.buttons.push({
         type:"postback",
