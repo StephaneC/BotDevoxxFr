@@ -67,9 +67,7 @@ app.post('/apiwebhook', function(req, res){
             break;
         case 'find_conference':
             console.log("action.find_conference");
-            var year;
-
-            conferencesDao.getConferencesByTheme(request.result.parameters.search, sender, function (response){
+            conferencesDao.getConferencesByTheme(request.result.parameters['conferences_keywords'], sender, function (response){
               res.send(response);
             });
             break;

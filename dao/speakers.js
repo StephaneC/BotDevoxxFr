@@ -54,6 +54,9 @@ var findSpeaker = function(firstName, lastName, sender, callback){
   getAllSpeakers(function(speakers){
     var found = [];
     for(var i=0; i<speakers.length; i++){
+      if(i==0){
+        console.log(JSON.stringify(speakers[i]));
+      }
       //Api.ai could be wrong on first/last name check all
       if(speakers[i].firstName.toLowerCase().includes(firstName.toLowerCase()) ||
         speakers[i].lastName.toLowerCase().includes(firstName.toLowerCase()) ||

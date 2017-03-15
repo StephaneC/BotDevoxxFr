@@ -19,7 +19,7 @@ var findSpeakerResponse = function(sender, found){
     } else {
         msg = "";
         for(var i=0; i<found.length; i++){
-          msg += 'J\'ai trouvé '+ found[0].firstName + ' ' + found[0].firstName+ ".";
+          msg += 'J\'ai trouvé '+ found[i].firstName + ' ' + found[i].firstName+ ".";
         }
     }
     console.log("message : " + JSON.stringify(msg));
@@ -58,7 +58,14 @@ var getSpeakerElementForCarousel = function(elt){
         type:"web_url",
         url:elt.acceptedTalks[i].links[0].href,
         title:elt.acceptedTalks[i].title
-      })
+      });
+    } else {
+      //let's go to details
+      msg.buttons.push({
+        type:"postback",
+        payload:"SPEAKER_DETAIL_"+elt.uuid,
+        title:"détail"
+      });
     }
   }
 
